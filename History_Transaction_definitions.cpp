@@ -48,21 +48,6 @@ Transaction::Transaction(std::string ticker_symbol, unsigned int day_date, unsig
 //
 Transaction::~Transaction()
 {
-  std::string symbol = "0";
-  day = 0;
-  month = 0;
-  year = 0;
-  std::string trans_type = "0";
-  shares = 0;
-  amount = 0;
-  trans_id = 0;
-
-  // These private members have to be populated.
-  acb = 0;
-  acb_per_share = 0;
-  share_balance = 0;
-  cgl = 0;
-
   p_next = nullptr;
 }
 
