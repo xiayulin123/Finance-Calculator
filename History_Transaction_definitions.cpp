@@ -296,6 +296,7 @@ void History::sort_by_date()
   Transaction *new_head = p_head;
   p_head = p_head->get_next();
   new_head->set_next(nullptr);
+
   while (p_head != nullptr)
   {
 
@@ -324,9 +325,10 @@ void History::sort_by_date()
       }
       else
       {
-        before->set_next(p_head);
+        now = p_head;
         p_head = p_head->get_next();
-        before->get_next()->set_next(after);
+        now->set_next(after);
+        before->set_next(now);
       }
     }
   }
