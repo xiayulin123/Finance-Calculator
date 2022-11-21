@@ -391,24 +391,37 @@ void History::update_acb_cgl()
   {
     if (new_ACB_pointer->get_trans_type())
     {
-
-      new_ACB_pointer->set_acb(new_acb + new_ACB_pointer->get_amount());
-      new_acb += (new_ACB_pointer->get_amount());
-      new_shares += (new_ACB_pointer->get_shares());
-      new_shareballance += (new_ACB_pointer->get_shares());
-      new_ACB_pointer->set_acb_per_share(new_acb / new_shares);
+      new_acb += new_ACB_pointer->get_amount();
+      new_shareballance += new_ACB_pointer->get_shares();
+      price = new_acb / (double)new_shareballance;
+      new_ACB_pointer->set_acb(new_acb);
       new_ACB_pointer->set_share_balance(new_shareballance);
-      price = new_acb / double(new_shares);
+      new_ACB_pointer->set_acb_per_share(price);
+
+      // new_ACB_pointer->set_acb(new_acb + new_ACB_pointer->get_amount());
+      // new_acb += (new_ACB_pointer->get_amount());
+      // new_shares += (new_ACB_pointer->get_shares());
+      // new_shareballance += (new_ACB_pointer->get_shares());
+      // new_ACB_pointer->set_acb_per_share(new_acb / new_shares);
+      // new_ACB_pointer->set_share_balance(new_shareballance);
+      // price = new_acb / double(new_shares);
     }
     else
     {
-      new_ACB_pointer->set_acb(new_acb - new_ACB_pointer->get_shares() * price);
-      new_acb -= (new_ACB_pointer->get_shares() * price);
-      new_shares -= (new_ACB_pointer->get_shares());
-      new_ACB_pointer->set_acb_per_share(price);
-      new_shareballance -= (new_ACB_pointer->get_shares());
+      new_acb -= new_ACB_pointer->get_shares() * price;
+      new_shareballance -= new_ACB_pointer->get_shares();
+      price = new_acb / (double)new_shareballance;
+      new_ACB_pointer->set_acb(new_acb);
       new_ACB_pointer->set_share_balance(new_shareballance);
+      new_ACB_pointer->set_acb_per_share(price);
       new_ACB_pointer->set_cgl(new_ACB_pointer->get_amount() - (new_ACB_pointer->get_shares() * price));
+      // new_ACB_pointer->set_acb(new_acb - new_ACB_pointer->get_shares() * price);
+      // new_acb -= (new_ACB_pointer->get_shares() * price);
+      // new_shares -= (new_ACB_pointer->get_shares());
+      // new_ACB_pointer->set_acb_per_share(new_acb / new_shares);
+      // new_shareballance -= (new_ACB_pointer->get_shares());
+      // new_ACB_pointer->set_share_balance(new_shareballance);
+      // new_ACB_pointer->set_cgl(new_ACB_pointer->get_amount() - (new_ACB_pointer->get_shares() * price));
     }
     new_ACB_pointer = new_ACB_pointer->get_next();
   }
@@ -420,25 +433,13 @@ void History::update_acb_cgl()
 double History::compute_cgl(unsigned int year)
 {
   Transaction *comcgl = p_head;
-  double price{0};
-  double new_cgl{0};
   double total_cgl{0};
 
   while (comcgl != NULL)
   {
     if (comcgl->get_year() == year)
     {
-      if (comcgl->get_trans_type())
-      {
-        price = comcgl->get_acb_per_share();
-      }
-      else
-      {
-        new_cgl = (comcgl->get_amount() - (comcgl->get_shares() * price));
-        comcgl->set_cgl(new_cgl);
-        // std::cout << new_cgl << std::endl;
-        total_cgl += new_cgl;
-      }
+      total_cgl += comcgl->get_cgl();
     }
     comcgl = comcgl->get_next();
   }
