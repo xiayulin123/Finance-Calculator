@@ -333,45 +333,8 @@ void History::sort_by_date()
     }
   }
   p_head = new_head;
-  // Transaction* new_list = this->p_head;
-  //   this->p_head = this->p_head->get_next();
-  //   new_list->set_next(NULL);
 
-  //   while (this->p_head != NULL){
-  //       Transaction* traverse_h = new_list;
-  //       Transaction* traverse_t = new_list->get_next();
-  //       Transaction* tmp = NULL;
-
-  //       // if head
-  //       if(*this->p_head < *traverse_h){
-  //           tmp = this->p_head;
-  //           this->p_head = this->p_head->get_next();
-  //           tmp->set_next(traverse_h);
-  //           new_list = tmp;
-  //           continue;
-  //       }
-
-  //       // find the right place for node
-  //       while (traverse_t != NULL && *traverse_t < *this->p_head){
-  //           traverse_h = traverse_t;
-  //           traverse_t = traverse_t->get_next();
-  //       }
-
-  //       if (traverse_t == NULL){
-  //           // insert at the end
-  //           traverse_h->set_next(this->p_head);
-  //           this->p_head = this->p_head->get_next();
-  //           traverse_h->get_next()->set_next(NULL);
-
-  //       }else{
-  //           // insert in the middle
-  //           tmp = this->p_head;
-  //           this->p_head = this->p_head->get_next();
-  //           tmp->set_next(traverse_t);
-  //           traverse_h->set_next(tmp);
-  //       }
-
-  //   }
+    //   }
 
   //   this->p_head = new_list;
 }
